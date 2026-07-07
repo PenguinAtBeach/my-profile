@@ -4,10 +4,17 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tran Tuan Phuong — Senior Full-Stack Engineer</title>
-<meta name="description" content="Tran Tuan Phuong — Senior full-stack engineer with 8+ years across ReactJS, Node.js, TypeScript and AWS. Senior engineer at Skedulo. Based in Ho Chi Minh City, open to remote roles." />
+<meta name="description" content="Tran Tuan Phuong — Senior full-stack engineer with 8 years across ReactJS, Node.js, TypeScript and AWS. Senior engineer at Skedulo. Based in Ho Chi Minh City, open to remote roles and freelance projects." />
+<meta name="author" content="Tran Tuan Phuong" />
+<meta name="theme-color" content="#f6f4ee" id="themeColor" />
 <meta property="og:title" content="Tran Tuan Phuong — Senior Full-Stack Engineer" />
-<meta property="og:description" content="8+ years building web products across ReactJS, Node.js, TypeScript and AWS. Senior engineer at Skedulo." />
+<meta property="og:description" content="8 years building web products across ReactJS, Node.js, TypeScript and AWS. Senior engineer at Skedulo." />
 <meta property="og:type" content="website" />
+<meta property="og:site_name" content="Tran Tuan Phuong" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Tran Tuan Phuong — Senior Full-Stack Engineer" />
+<meta name="twitter:description" content="8 years building web products across ReactJS, Node.js, TypeScript and AWS." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='8' fill='%2316324f'/%3E%3Ctext x='17' y='24' font-family='Georgia,serif' font-size='20' fill='%23ffffff' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -33,6 +40,12 @@
   ::selection{background:var(--accent);color:#fff}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
 
+  /* focus + skip link */
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+  input:focus-visible,textarea:focus-visible{outline:none}
+  .skip{position:absolute;left:12px;top:-60px;z-index:200;background:var(--accent);color:#fff;padding:10px 16px;border-radius:0 0 10px 10px;font-size:14px;font-weight:600;transition:top .2s ease}
+  .skip:focus{top:0}
+
   /* nav */
   header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--paper) 88%, transparent);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid transparent;transition:border-color .3s ease}
   header.nav.scrolled{border-bottom-color:var(--line)}
@@ -44,8 +57,8 @@
   nav.links{display:flex;align-items:center;gap:26px}
   nav.links a.navlink{font-size:14.5px;color:var(--ink-soft);font-weight:500;position:relative}
   nav.links a.navlink::after{content:"";position:absolute;left:0;bottom:-5px;height:1.5px;width:0;background:var(--accent);transition:width .25s ease}
-  nav.links a.navlink:hover{color:var(--ink)}
-  nav.links a.navlink:hover::after{width:100%}
+  nav.links a.navlink:hover,nav.links a.navlink:focus-visible{color:var(--ink)}
+  nav.links a.navlink:hover::after,nav.links a.navlink:focus-visible::after{width:100%}
   .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;font-size:14.5px;font-weight:600;border:1px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer;transition:all .2s ease;font-family:inherit}
   .btn:hover{background:var(--ink);color:var(--paper)}
   .btn.solid{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -57,7 +70,8 @@
   .kbd-hint{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--ink-soft);border:1px solid var(--line);background:var(--card);border-radius:9px;padding:7px 11px;cursor:pointer;transition:all .2s ease}
   .kbd-hint:hover{color:var(--ink);border-color:var(--ink-soft)}
   .kbd-hint kbd{font-family:"JetBrains Mono",monospace;font-size:11.5px;background:var(--paper-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
-  @media(max-width:820px){nav.links a.navlink{display:none}.kbd-hint .lbl{display:none}}
+  .menu-btn{display:none;font-size:19px}
+  @media(max-width:820px){nav.links a.navlink{display:none}.kbd-hint{display:none}.menu-btn{display:grid}}
 
   /* hero */
   .hero{padding:80px 0 66px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
@@ -66,7 +80,7 @@
   .dot{width:8px;height:8px;border-radius:50%;background:#37a35a;animation:pulse 2.4s infinite}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(55,163,90,.45)}70%{box-shadow:0 0 0 9px rgba(55,163,90,0)}100%{box-shadow:0 0 0 0 rgba(55,163,90,0)}}
   .clock{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-soft);font-family:"JetBrains Mono",monospace}
-  .hero h1{font-size:clamp(42px,7vw,78px);margin:24px 0 0;letter-spacing:-.02em}
+  .hero h1{font-size:clamp(42px,7vw,78px);margin:24px 0 0;letter-spacing:-.02em;text-wrap:balance}
   .hero h1 em{font-style:italic;color:var(--accent)}
   .hero .role{font-size:clamp(19px,2.6vw,24px);color:var(--ink-soft);margin-top:14px;font-family:"Newsreader",serif;font-style:italic}
   .hero p.lede{max-width:640px;margin:26px 0 0;font-size:18.5px;color:var(--ink-soft)}
@@ -84,6 +98,7 @@
 
   /* projects */
   .projects{display:grid;gap:22px}
+  @media(min-width:900px){.projects{grid-template-columns:1fr 1fr}}
   .proj{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px 30px 26px;box-shadow:var(--shadow);position:relative;display:grid;grid-template-columns:1fr auto;gap:8px 24px;align-items:start;transition:transform .3s ease,box-shadow .3s ease}
   .proj:hover{transform:translateY(-4px)}
   .proj .role-tag{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-2);background:var(--paper-2);padding:5px 10px;border-radius:6px;white-space:nowrap}
@@ -177,6 +192,8 @@
 </head>
 <body>
 
+<a class="skip" href="#top">Skip to content</a>
+
 <header class="nav" id="nav">
   <div class="wrap nav-in">
     <a class="mark" href="#top">
@@ -188,8 +205,9 @@
       <a class="navlink" href="#casestudy">Case study</a>
       <a class="navlink" href="#experience">Experience</a>
       <a class="navlink" href="#contact">Contact</a>
-      <button class="kbd-hint" id="cmdkOpen" aria-label="Open command palette"><span class="lbl">Search</span> <kbd>⌘</kbd><kbd>K</kbd></button>
-      <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode">◐</button>
+      <button class="kbd-hint" id="cmdkOpen" aria-label="Open command palette"><span class="lbl">Search</span> <kbd aria-hidden="true">⌘</kbd><kbd aria-hidden="true">K</kbd></button>
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">◐</button>
     </nav>
   </div>
 </header>
@@ -199,12 +217,12 @@
   <section class="hero">
     <div class="wrap">
       <div class="pill-row reveal">
-        <span class="avail"><span class="dot"></span> Open to remote &amp; international roles</span>
+        <span class="avail"><span class="dot"></span> Open to roles &amp; freelance projects</span>
         <span class="clock" id="clock">— : —  ICT</span>
       </div>
-      <h1 class="reveal">Phuong builds <em>reliable</em><br>web products, end to end.</h1>
-      <p class="role reveal">Senior Full-Stack Engineer</p>
-      <p class="lede reveal">Eight-plus years turning fuzzy product requirements into shipped software — ReactJS and TypeScript on the front, Node.js and PostgreSQL behind it, running on AWS. Currently a senior engineer at Skedulo, building tools used by government and enterprise clients across the US and Australia.</p>
+      <h1 class="reveal">I build <em>reliable</em> web products, end to end.</h1>
+      <p class="role reveal">Senior Full-Stack Engineer · Skedulo</p>
+      <p class="lede reveal">Eight years turning fuzzy product requirements into shipped software — ReactJS and TypeScript on the front, Node.js and PostgreSQL behind it, running on AWS. Currently a senior engineer at Skedulo, building tools used by government and enterprise clients across the US and Australia.</p>
       <div class="cta reveal">
         <a class="btn solid" href="#contact">Get in touch</a>
         <a class="btn" href="#casestudy">Read a case study</a>
@@ -213,7 +231,7 @@
         <div class="m"><b data-count="8" data-suffix="+">0</b><span>Years shipping<br>production software</span></div>
         <div class="m"><b data-count="6" data-suffix="">0</b><span>Products built<br>end to end</span></div>
         <div class="m"><b data-count="4" data-suffix="">0</b><span>Countries of<br>clients served</span></div>
-        <div class="m"><b data-count="10" data-suffix="+">0</b><span>Web &amp; mobile<br>products delivered</span></div>
+        <div class="m"><b data-count="180" data-suffix="+">0</b><span>Screens delivered<br>in one system</span></div>
       </div>
     </div>
   </section>
@@ -247,6 +265,7 @@
           <div class="yr">Skedulo · 2021 – 2023 · Team of 13</div>
           <p>A COVID-19 vaccination booking platform built for scale, serving large volumes of patients over web and mobile — primarily for government clients. I designed solutions for customer requests, shipped features, monitored production with Datadog and CloudWatch, and served on-call during incidents alongside the Brisbane engineering team.</p>
           <div class="tags"><span>ReactJS</span><span>Node.js</span><span>Koa</span><span>AWS Lambda</span><span>EC2</span><span>PostgreSQL</span><span>Datadog</span></div>
+          <a class="link" href="#contact">Ask about this work →</a>
         </article>
         <article class="proj reveal">
           <h3>Kelley Blue Book (KBB.com)</h3>
@@ -329,7 +348,7 @@
     <div class="wrap">
       <div class="eyebrow reveal">Career</div>
       <h2 class="sec-head reveal">A steady path from developer to senior engineer.</h2>
-      <p class="sec-sub reveal">Nine years across product companies and outsourcing houses — growing from Java and .NET into senior full-stack engineering.</p>
+      <p class="sec-sub reveal">Eight years across product companies and outsourcing houses — growing from Java and .NET into senior full-stack engineering.</p>
       <div class="timeline">
         <div class="tl reveal"><div class="when">May 2021 — Present</div><h3>Senior Software Engineer</h3><div class="co">Skedulo · Remote (HQ Brisbane, Australia)</div><p>Built Form Builder and Data Loading, and worked full-stack on the high-capacity vaccine booking platform. Own technical design, tech-stack decisions, CI/CD pipelines, and cloud infrastructure on AWS.</p></div>
         <div class="tl reveal"><div class="when">May 2020 — May 2021</div><h3>Senior Software Engineer</h3><div class="co">Shynh Group · Ho Chi Minh City</div><p>Built the admin platforms for a leading Vietnamese spa chain and set up its AWS infrastructure end to end — VPCs, Elastic Beanstalk, PM2 cluster mode, Route 53, and security groups. Integrated third-party CRM services and published the mobile app to Google Play.</p></div>
@@ -362,30 +381,31 @@
       <div class="reveal">
         <div class="eyebrow">Get in touch</div>
         <h2>Let's build<br>something.</h2>
-        <p style="color:var(--ink-soft);max-width:420px">Open to senior full-stack roles — remote or based in Ho Chi Minh City. Drop a message and I'll reply within a day.</p>
+        <p style="color:var(--ink-soft);max-width:420px">Open to senior full-stack roles and freelance projects — remote or based in Ho Chi Minh City. Drop a message and I'll reply within a day.</p>
         <div class="avail-card">
           <div class="row"><span class="lab">Availability</span><span class="val ok">Open to work</span></div>
+          <div class="row"><span class="lab">Engagements</span><span class="val">Full-time · freelance</span></div>
           <div class="row"><span class="lab">Work style</span><span class="val">Remote / hybrid</span></div>
           <div class="row"><span class="lab">Time zone</span><span class="val">GMT+7 · ICT</span></div>
           <div class="row"><span class="lab">My local time</span><span class="val" id="clock2">— : —</span></div>
           <div class="row"><span class="lab">Typical reply</span><span class="val">&lt; 24 hours</span></div>
         </div>
         <div class="contact-list">
-          <a href="mailto:trantuanphuong19941994@gmail.com"><span class="ic">@</span> trantuanphuong19941994@gmail.com</a>
-          <a href="tel:+84969900795"><span class="ic">tel</span> +84 969 900 795</a>
-          <div><span class="ic">loc</span> Ho Chi Minh City, Vietnam</div>
-          <a href="#" target="_blank" rel="noopener"><span class="ic">in</span> LinkedIn — add your URL</a>
-          <a href="https://github.com/phuong-cse-iu" target="_blank" rel="noopener"><span class="ic">{ }</span> github.com/phuong-cse-iu</a>
+          <a href="mailto:trantuanphuong19941994@gmail.com"><span class="ic" aria-hidden="true">@</span> trantuanphuong19941994@gmail.com</a>
+          <a href="tel:+84969900795"><span class="ic" aria-hidden="true">tel</span> +84 969 900 795</a>
+          <div><span class="ic" aria-hidden="true">loc</span> Ho Chi Minh City, Vietnam</div>
+          <a href="https://www.linkedin.com/in/trần-phương-a06117109" target="_blank" rel="noopener"><span class="ic" aria-hidden="true">in</span> LinkedIn</a>
+          <a href="https://github.com/phuong-cse-iu" target="_blank" rel="noopener"><span class="ic" aria-hidden="true">{ }</span> github.com/phuong-cse-iu</a>
         </div>
         <a class="btn solid" style="margin-top:22px" href="./Phuong_Tran_CV.pdf" download>Download résumé (PDF) ↓</a>
       </div>
       <div class="reveal">
-        <form action="https://formspree.io/f/your-form-id" method="POST" id="contactForm">
+        <form id="contactForm">
           <div class="field"><label for="name">Name</label><input id="name" name="name" type="text" required placeholder="Your name" /></div>
           <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required placeholder="you@company.com" /></div>
           <div class="field"><label for="message">Message</label><textarea id="message" name="message" required placeholder="A little about the role or project…"></textarea></div>
           <button class="btn solid" type="submit" style="justify-content:center">Send message</button>
-          <p class="form-note">This form uses Formspree. Until you add your endpoint, the button falls back to opening your email app.</p>
+          <p class="form-note">Sending opens a pre-filled email in your mail app.</p>
         </form>
       </div>
     </div>
@@ -401,9 +421,9 @@
 
 <!-- command palette -->
 <div class="cmdk-overlay" id="cmdk">
-  <div class="cmdk" role="dialog" aria-label="Command palette">
-    <input id="cmdkInput" type="text" placeholder="Type a section or action…" autocomplete="off" />
-    <div class="cmdk-list" id="cmdkList"></div>
+  <div class="cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
+    <input id="cmdkInput" type="text" role="combobox" aria-expanded="true" aria-controls="cmdkList" aria-autocomplete="list" placeholder="Type a section or action…" autocomplete="off" />
+    <div class="cmdk-list" id="cmdkList" role="listbox" aria-label="Commands"></div>
     <div class="cmdk-foot"><span>↑↓ navigate</span><span>↵ select</span><span>esc close</span></div>
   </div>
 </div>
@@ -413,12 +433,21 @@
 
   // theme
   const root = document.documentElement, tt = document.getElementById('themeToggle');
+  const themeColorMeta = document.getElementById('themeColor');
+  function syncTheme(){
+    const dark = root.getAttribute('data-theme')==='dark';
+    tt.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    tt.textContent = dark ? '☀' : '◐';
+    tt.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    if(themeColorMeta) themeColorMeta.setAttribute('content', dark ? '#14120f' : '#f6f4ee');
+  }
   const savedTheme = localStorage.getItem('theme');
   if(savedTheme){ root.setAttribute('data-theme', savedTheme); }
   else if(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches){ root.setAttribute('data-theme','dark'); }
+  syncTheme();
   tt.addEventListener('click', ()=>{
     const next = root.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next); localStorage.setItem('theme', next);
+    root.setAttribute('data-theme', next); localStorage.setItem('theme', next); syncTheme();
   });
 
   // nav shadow
@@ -473,6 +502,7 @@
     {icon:'@', label:'Email me', meta:'action', run:()=>location.href='mailto:trantuanphuong19941994@gmail.com'},
     {icon:'↓', label:'Download résumé (PDF)', meta:'action', run:()=>location.href='./Phuong_Tran_CV.pdf'},
     {icon:'{}', label:'Open GitHub', meta:'link', run:()=>window.open('https://github.com/phuong-cse-iu','_blank')},
+    {icon:'in', label:'Open LinkedIn', meta:'link', run:()=>window.open('https://www.linkedin.com/in/trần-phương-a06117109','_blank')},
     {icon:'◐', label:'Toggle dark mode', meta:'action', run:()=>tt.click()},
   ];
   let filtered = actions.slice(), active = 0;
@@ -482,22 +512,30 @@
     filtered.forEach((a,i)=>{
       const d = document.createElement('div');
       d.className = 'cmdk-item' + (i===active?' active':'');
-      d.innerHTML = '<span class="ci">'+a.icon+'</span><span>'+a.label+'</span><span class="meta">'+a.meta+'</span>';
+      d.id = 'cmdk-opt-' + i;
+      d.setAttribute('role','option');
+      d.setAttribute('aria-selected', i===active ? 'true' : 'false');
+      d.innerHTML = '<span class="ci" aria-hidden="true">'+a.icon+'</span><span>'+a.label+'</span><span class="meta" aria-hidden="true">'+a.meta+'</span>';
       d.addEventListener('click', ()=>{ a.run(); close(); });
       d.addEventListener('mousemove', ()=>{ active=i; paint(); });
       cmdkList.appendChild(d);
     });
+    paint();
   }
-  function paint(){ [...cmdkList.children].forEach((c,i)=>c.classList && c.classList.toggle('active', i===active)); }
+  function paint(){ [...cmdkList.children].forEach((c,i)=>{ if(!c.classList) return; const on = i===active; c.classList.toggle('active', on); c.setAttribute('aria-selected', on?'true':'false'); if(on) cmdkInput.setAttribute('aria-activedescendant', c.id); }); }
   function filter(){ const q = cmdkInput.value.toLowerCase().trim(); filtered = actions.filter(a=>a.label.toLowerCase().includes(q)); active=0; render(); }
-  function open(){ cmdk.classList.add('open'); cmdkInput.value=''; filter(); setTimeout(()=>cmdkInput.focus(),20); }
-  function close(){ cmdk.classList.remove('open'); }
+  let lastFocus = null;
+  const bgEls = [document.getElementById('nav'), document.getElementById('top'), document.querySelector('footer')];
+  function open(){ lastFocus = document.activeElement; cmdk.classList.add('open'); bgEls.forEach(el=>el && el.setAttribute('inert','')); cmdkInput.value=''; filter(); setTimeout(()=>cmdkInput.focus(),20); }
+  function close(){ cmdk.classList.remove('open'); bgEls.forEach(el=>el && el.removeAttribute('inert')); if(lastFocus && lastFocus.focus) lastFocus.focus(); }
   document.getElementById('cmdkOpen').addEventListener('click', open);
+  document.getElementById('menuBtn').addEventListener('click', open);
   cmdkInput.addEventListener('input', filter);
   cmdk.addEventListener('click', e=>{ if(e.target===cmdk) close(); });
   addEventListener('keydown', e=>{
     if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); cmdk.classList.contains('open')?close():open(); return; }
     if(!cmdk.classList.contains('open')) return;
+    if(e.key==='Tab'){ e.preventDefault(); cmdkInput.focus(); return; }
     if(e.key==='Escape') close();
     else if(e.key==='ArrowDown'){ e.preventDefault(); active=Math.min(active+1, filtered.length-1); paint(); scrollActive(); }
     else if(e.key==='ArrowUp'){ e.preventDefault(); active=Math.max(active-1, 0); paint(); scrollActive(); }
@@ -505,15 +543,13 @@
   });
   function scrollActive(){ const el = cmdkList.children[active]; if(el && el.scrollIntoView) el.scrollIntoView({block:'nearest'}); }
 
-  // form fallback
+  // form → pre-filled email
   const form = document.getElementById('contactForm');
   form.addEventListener('submit', function(ev){
-    if(form.action.includes('your-form-id')){
-      ev.preventDefault();
-      const n = document.getElementById('name').value, m = document.getElementById('message').value;
-      location.href = 'mailto:trantuanphuong19941994@gmail.com?subject=' +
-        encodeURIComponent('Portfolio enquiry from ' + n) + '&body=' + encodeURIComponent(m + '\n\n— ' + n);
-    }
+    ev.preventDefault();
+    const n = document.getElementById('name').value, em = document.getElementById('email').value, m = document.getElementById('message').value;
+    location.href = 'mailto:trantuanphuong19941994@gmail.com?subject=' +
+      encodeURIComponent('Portfolio enquiry from ' + n) + '&body=' + encodeURIComponent(m + '\n\n— ' + n + (em ? ' <' + em + '>' : ''));
   });
 </script>
 </body>
