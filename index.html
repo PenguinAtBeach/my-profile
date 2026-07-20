@@ -144,6 +144,42 @@
   .skill-card ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
   .skill-card li{font-size:13.5px;font-family:"JetBrains Mono",monospace;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:5px 9px}
 
+  /* writing / blog */
+  .posts{display:grid;gap:18px}
+  @media(min-width:820px){.posts{grid-template-columns:1fr 1fr}}
+  .post{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 28px;box-shadow:var(--shadow);cursor:pointer;text-align:left;font-family:inherit;color:inherit;display:flex;flex-direction:column;transition:transform .3s ease,border-color .3s ease}
+  .post:hover,.post:focus-visible{transform:translateY(-4px);border-color:var(--ink-soft)}
+  .post .pmeta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-soft);letter-spacing:.03em}
+  .post .ptag{color:var(--accent);text-transform:uppercase;letter-spacing:.1em}
+  .post .pmeta .sep{opacity:.5}
+  .post h3{font-size:23px;margin:14px 0 0;line-height:1.15}
+  .post p{color:var(--ink-soft);font-size:15.5px;margin:12px 0 0}
+  .post .more{margin-top:18px;font-weight:600;font-size:14px;color:var(--accent);display:inline-flex;align-items:center;gap:7px}
+  .post:hover .more{gap:11px}
+
+  /* reader overlay */
+  .reader-overlay{position:fixed;inset:0;z-index:120;background:rgba(20,18,15,.55);backdrop-filter:blur(4px);display:none;justify-content:center;overflow-y:auto;padding:6vh 20px 60px}
+  .reader-overlay.open{display:flex}
+  .reader{width:min(720px,100%);background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:0 30px 80px -24px rgba(0,0,0,.6);max-height:none;align-self:flex-start}
+  .reader-bar{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 24px;background:color-mix(in srgb, var(--paper) 90%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);border-radius:18px 18px 0 0}
+  .reader-bar .rlabel{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  .reader-close{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);display:grid;place-items:center;cursor:pointer;font-size:18px;transition:all .2s ease;flex:none}
+  .reader-close:hover{color:var(--ink);border-color:var(--ink-soft)}
+  .reader-body{padding:28px 44px 48px}
+  @media(max-width:560px){.reader-body{padding:24px 24px 40px}}
+  .reader-body .pmeta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-soft);letter-spacing:.03em}
+  .reader-body .ptag{color:var(--accent);text-transform:uppercase;letter-spacing:.1em}
+  .reader-body .sep{opacity:.5}
+  .reader-body h1{font-size:clamp(28px,5vw,40px);margin:16px 0 0;letter-spacing:-.01em}
+  .reader-body .article{margin-top:22px}
+  .reader-body .article p{color:var(--ink-soft);font-size:17px;margin:0 0 18px}
+  .reader-body .article h2{font-size:24px;margin:34px 0 12px}
+  .reader-body .article ul{color:var(--ink-soft);font-size:17px;margin:0 0 18px;padding-left:22px}
+  .reader-body .article li{margin:0 0 8px}
+  .reader-body .article a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+  .reader-body .article code{font-family:"JetBrains Mono",monospace;font-size:14px;background:var(--paper-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+  .reader-body .article blockquote{margin:0 0 18px;padding:4px 0 4px 20px;border-left:3px solid var(--accent);color:var(--ink);font-family:"Newsreader",serif;font-style:italic;font-size:19px}
+
   /* contact + availability */
   .contact-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px}
   @media(max-width:760px){.contact-grid{grid-template-columns:1fr;gap:36px}}
@@ -203,6 +239,7 @@
     <nav class="links">
       <a class="navlink" href="#work">Work</a>
       <a class="navlink" href="#casestudy">Case study</a>
+      <a class="navlink" href="#writing">Writing</a>
       <a class="navlink" href="#experience">Experience</a>
       <a class="navlink" href="#contact">Contact</a>
       <button class="kbd-hint" id="cmdkOpen" aria-label="Open command palette"><span class="lbl">Search</span> <kbd aria-hidden="true">⌘</kbd><kbd aria-hidden="true">K</kbd></button>
@@ -343,6 +380,16 @@
     </div>
   </section>
 
+  <!-- WRITING -->
+  <section id="writing">
+    <div class="wrap">
+      <div class="eyebrow reveal">Writing</div>
+      <h2 class="sec-head reveal">Notes from the workbench.</h2>
+      <p class="sec-sub reveal">Occasional posts on things I find interesting — engineering decisions, patterns I keep reaching for, and lessons from shipping real software.</p>
+      <div class="posts reveal" id="posts"></div>
+    </div>
+  </section>
+
   <!-- EXPERIENCE -->
   <section id="experience">
     <div class="wrap">
@@ -419,6 +466,17 @@
   </div>
 </footer>
 
+<!-- writing reader -->
+<div class="reader-overlay" id="reader">
+  <article class="reader" role="dialog" aria-modal="true" aria-labelledby="readerTitle">
+    <div class="reader-bar">
+      <span class="rlabel">Writing</span>
+      <button class="reader-close" id="readerClose" aria-label="Close article">✕</button>
+    </div>
+    <div class="reader-body" id="readerBody"></div>
+  </article>
+</div>
+
 <!-- command palette -->
 <div class="cmdk-overlay" id="cmdk">
   <div class="cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
@@ -488,6 +546,112 @@
   }
   document.querySelectorAll('b[data-count]').forEach(b=>io.observe(b));
 
+  // writing / blog
+  // Add a new post by prepending an object here. `body` is an HTML string
+  // rendered inside .article — use <p>, <h2>, <ul>, <blockquote>, <code>, <a>.
+  const posts = [
+    {
+      tag: 'Architecture',
+      date: '2024-11-12',
+      read: '6 min read',
+      title: 'Streaming millions of records without freezing the UI',
+      excerpt: 'Why an asynchronous, queue-backed pipeline beat the obvious "just loop and insert" approach when we built tenant-to-tenant data migration at Skedulo.',
+      body: `
+        <p>When we set out to move configuration and record data between Skedulo tenants, the naive version was tempting: read everything, loop, write everything. It works beautifully on a demo dataset and falls apart the moment a customer has millions of rows.</p>
+        <h2>The three constraints that shaped everything</h2>
+        <ul>
+          <li>The migration could take minutes — the UI could not block or hold a connection open for it.</li>
+          <li>We could not load an entire tenant into memory.</li>
+          <li>Whatever we built had to fit the existing <code>NestJS</code> + AWS stack, not introduce a new one.</li>
+        </ul>
+        <p>That pushed us toward an asynchronous pipeline. The export side streams records in bounded batches; each batch is dropped onto an SQS queue; import workers pull from the queue and write to the target tenant at their own pace.</p>
+        <blockquote>The user kicks off a migration and walks away. The system does the patient work.</blockquote>
+        <h2>Why bounded batches matter</h2>
+        <p>Batching is the whole trick. A fixed batch size — we settled around 500 — keeps memory flat regardless of dataset size, gives the queue natural back-pressure, and makes the work <em>resumable</em>: if a worker dies, only its in-flight batch replays.</p>
+        <p>The lesson I keep relearning: for anything unbounded, design for the largest input you can imagine, then make the memory cost independent of it.</p>
+      `
+    },
+    {
+      tag: 'Frontend',
+      date: '2024-08-03',
+      read: '4 min read',
+      title: 'Letting non-developers build forms, safely',
+      excerpt: 'A data-driven rendering model turned a manual form-building workforce into a visual editor — and kept the output valid by construction.',
+      body: `
+        <p>Skedulo's Form Builder replaces a client's manual form-building process with a visual editor. The hard part isn't the drag-and-drop — it's guaranteeing that whatever a non-technical user assembles produces valid JSON for our Mobile rendering Engine (MEX).</p>
+        <h2>Make invalid states unrepresentable</h2>
+        <p>Instead of validating after the fact, the editor is driven by a schema that only exposes valid choices. Every widget on the canvas maps to a typed node; the tree of nodes <em>is</em> the document. There is no separate "serialize" step that can drift from what the user sees.</p>
+        <p>For the trickier pieces we lean on the <code>TypeScript</code> Compiler API to parse source and derive options, and <code>Zustand</code> for a small, predictable store. The result: what you drag is what ships.</p>
+        <blockquote>Constrain the inputs and correctness stops being a test you run — it becomes a shape the data can't escape.</blockquote>
+      `
+    },
+    {
+      tag: 'Craft',
+      date: '2024-05-19',
+      read: '3 min read',
+      title: 'Why I still hand-code my portfolio',
+      excerpt: 'No framework, no build step — just one HTML file. A small argument for occasionally working close to the metal.',
+      body: `
+        <p>This site is a single HTML file. No framework, no bundler, no build step. That's a deliberate choice, and every year I'm more convinced it's the right one for a page like this.</p>
+        <h2>What you get for free</h2>
+        <ul>
+          <li><strong>It loads instantly.</strong> There's nothing to hydrate.</li>
+          <li><strong>It never breaks.</strong> No dependency will be deprecated out from under it.</li>
+          <li><strong>It stays legible.</strong> Anyone can open the source and understand the whole thing.</li>
+        </ul>
+        <p>Working close to the platform is a good calibration exercise. It reminds you what the browser actually gives you — flexbox, custom properties, <code>IntersectionObserver</code>, a live clock in three lines — before you reach for a tool to abstract it away.</p>
+        <blockquote>Reach for the framework when the problem needs it, not before.</blockquote>
+      `
+    }
+  ];
+
+  const fmtDate = (iso)=>{
+    const d = new Date(iso + 'T00:00:00');
+    return isNaN(d) ? iso : new Intl.DateTimeFormat('en-US',{year:'numeric',month:'short',day:'numeric'}).format(d);
+  };
+  const postsEl = document.getElementById('posts');
+  posts.forEach((post, i)=>{
+    const card = document.createElement('button');
+    card.className = 'post';
+    card.type = 'button';
+    card.setAttribute('aria-haspopup', 'dialog');
+    card.innerHTML =
+      '<div class="pmeta"><span class="ptag">'+post.tag+'</span><span class="sep">·</span><span>'+fmtDate(post.date)+'</span><span class="sep">·</span><span>'+post.read+'</span></div>'+
+      '<h3>'+post.title+'</h3>'+
+      '<p>'+post.excerpt+'</p>'+
+      '<span class="more">Read post →</span>';
+    card.addEventListener('click', ()=>openReader(i));
+    postsEl.appendChild(card);
+  });
+
+  const reader = document.getElementById('reader'), readerBody = document.getElementById('readerBody'), readerClose = document.getElementById('readerClose');
+  const readerBg = [document.getElementById('nav'), document.getElementById('top'), document.querySelector('footer')];
+  let readerLastFocus = null;
+  function openReader(i){
+    const post = posts[i];
+    if(!post) return;
+    readerBody.innerHTML =
+      '<div class="pmeta"><span class="ptag">'+post.tag+'</span><span class="sep">·</span><span>'+fmtDate(post.date)+'</span><span class="sep">·</span><span>'+post.read+'</span></div>'+
+      '<h1 id="readerTitle">'+post.title+'</h1>'+
+      '<div class="article">'+post.body+'</div>';
+    readerLastFocus = document.activeElement;
+    reader.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    readerBg.forEach(el=>el && el.setAttribute('inert',''));
+    readerBody.scrollTop = 0;
+    setTimeout(()=>readerClose.focus(), 20);
+  }
+  function closeReader(){
+    if(!reader.classList.contains('open')) return;
+    reader.classList.remove('open');
+    document.body.style.overflow = '';
+    readerBg.forEach(el=>el && el.removeAttribute('inert'));
+    if(readerLastFocus && readerLastFocus.focus) readerLastFocus.focus();
+  }
+  readerClose.addEventListener('click', closeReader);
+  reader.addEventListener('click', e=>{ if(e.target===reader) closeReader(); });
+  addEventListener('keydown', e=>{ if(e.key==='Escape' && reader.classList.contains('open')) closeReader(); });
+
   // command palette
   const cmdk = document.getElementById('cmdk'), cmdkInput = document.getElementById('cmdkInput'), cmdkList = document.getElementById('cmdkList');
   const go = (sel)=>{ const t = document.querySelector(sel); if(t) t.scrollIntoView({behavior:'smooth'}); };
@@ -495,6 +659,8 @@
     {icon:'#', label:'Top of page', meta:'section', run:()=>go('#top')},
     {icon:'#', label:'Selected work', meta:'section', run:()=>go('#work')},
     {icon:'#', label:'Case study — Data Loading', meta:'section', run:()=>go('#casestudy')},
+    {icon:'#', label:'Writing', meta:'section', run:()=>go('#writing')},
+    ...posts.map((p,i)=>({icon:'✎', label:'Read — ' + p.title, meta:'post', run:()=>{ go('#writing'); setTimeout(()=>openReader(i), 260); }})),
     {icon:'#', label:'Experience', meta:'section', run:()=>go('#experience')},
     {icon:'#', label:'Skills', meta:'section', run:()=>go('#skills')},
     {icon:'#', label:'Contact', meta:'section', run:()=>go('#contact')},
