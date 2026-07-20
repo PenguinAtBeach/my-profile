@@ -9,6 +9,40 @@
 (function (root) {
   var POSTS = [
     {
+      slug: 'this-week-in-ai-jul-20-2026',
+      tag: 'Reading list',
+      date: '2026-07-20',
+      read: '6 min read',
+      title: "This week in AI: China's Kimi K3 shock, Gemini's third delay, and a decade-old nginx bug",
+      excerpt: 'Seven stories from the last few days: an open-weight Chinese model beating Claude on real coding tasks, Google’s third Gemini 3.5 Pro delay, a critical nginx flaw dating back to 2011, Apple’s China AI deal, DeepMind’s bioresilience playbook, Vint Cerf’s post-Google project, and a fiscal-crisis warning on AI capex.',
+      body: `
+        <p>A follow-up to last week's roundup — the news cycle didn't slow down. This cut leans on Arena.ai's leaderboard data, F5's own advisory, and DeepMind's and TechCrunch's original posts rather than just headlines, grouped by topic with the part of each story that seemed worth keeping.</p>
+
+        <h2>LLMs</h2>
+        <ul>
+          <li><strong>Moonshot AI's Kimi K3 knocks Claude off the top of the Frontend Code Arena.</strong> The 2.8-trillion-parameter, open-weight model — Moonshot calls it the largest open-weight system released to date — scored 1,679 on Arena.ai's real-developer-voted leaderboard versus Claude Fable 5's 1,631, a 17-place jump from the prior Kimi release, topping 6 of 7 sub-categories. Moonshot itself is candid that K3 still trails Fable 5 and GPT-5.6 Sol on overall benchmarks; what changed is that an open-weight Chinese model is now competitive on a real-world-task leaderboard, not just synthetic benchmarks, and chip stocks reportedly sold off on the news. <a href="https://www.axios.com/2026/07/17/china-ai-kimi-k3-open-source-anthropic-opus" target="_blank" rel="noopener">Axios, Jul 17 →</a> · <a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/moonshot-releases-2-8-trillion-parameter-kimi-k3" target="_blank" rel="noopener">Tom's Hardware →</a></li>
+          <li><strong>Google delays Gemini 3.5 Pro for a third time.</strong> The model missed its own coding and complex-reasoning bar in internal testing even after a late-June retrain aimed squarely at fixing coding weaknesses; Alphabet shares reportedly dropped around 4% on the news. The pattern worth watching isn't the delay itself but the repeated cause — coding performance specifically, the same axis Kimi K3 and GPT-5.6 are currently competing hardest on. <a href="https://9to5google.com/2026/07/16/gemini-3-5-pro-delays/" target="_blank" rel="noopener">9to5Google, Jul 16 →</a></li>
+        </ul>
+
+        <h2>Infrastructure &amp; security</h2>
+        <ul>
+          <li><strong>F5 patches a critical nginx flaw that's been sitting in the code since 2011.</strong> CVE-2026-42533 is a heap buffer overflow in nginx's script engine, reachable through a fairly specific but real configuration pattern (a regex-based <code>map</code> whose output feeds a string expression after an earlier regex capture) — every version from 0.9.6 through 1.31.2 is affected. It's patched in 1.30.4/1.31.3 and NGINX Plus 37.0.3.1; two sibling bugs (CVE-2026-42530, CVE-2026-42055) score 9.2 and are exploitable pre-auth. No public exploit yet, but a fifteen-year-old default-path bug getting an out-of-band patch is worth an unscheduled upgrade window rather than the next maintenance cycle. <a href="https://thehackernews.com/2026/07/critical-nginx-vulnerability-can-crash.html" target="_blank" rel="noopener">The Hacker News, Jul 15 →</a></li>
+          <li><strong>Apple Intelligence clears China's regulator, built on Alibaba's Qwen and a parallel Baidu partnership.</strong> China's Cyberspace Administration approved the service after Apple agreed to route Chinese-market AI features through a local model rather than its own, spanning iOS, iPadOS, macOS, and visionOS. The notable part is the split: Alibaba's Qwen is confirmed as the integration partner while Baidu is separately developing Apple Intelligence features for the same market — Apple hedging across two domestic model providers rather than picking one. <a href="https://techcrunch.com/2026/07/16/apple-intelligence-approved-for-launch-in-china-with-alibabas-qwen-ai/" target="_blank" rel="noopener">TechCrunch, Jul 16 →</a></li>
+        </ul>
+
+        <h2>Policy &amp; safety</h2>
+        <ul>
+          <li><strong>DeepMind and Isomorphic Labs publish their bioresilience approach.</strong> The framing is explicitly dual: harden models against misuse for bio-threat design, while also actively equipping biosecurity defenders and public-health researchers with the same underlying tools. Worth noting as a template — a frontier lab treating defensive enablement as equally important to restriction, rather than safety-as-refusal alone. <a href="https://deepmind.google/blog/our-approach-to-bioresilience/" target="_blank" rel="noopener">Google DeepMind, Jul 16 →</a></li>
+          <li><strong>Vint Cerf leaves Google after two decades to work on agent identity for the open internet.</strong> One of the original architects of TCP/IP is now advising an effort to give AI agents a verifiable, portable identity layer so they can act on the open web without every site building bespoke bot-detection and access rules. It's an infrastructure problem, not a model problem — the same shape of problem Cerf spent the 1970s solving for computers themselves. <a href="https://techcrunch.com/2026/07/15/vint-cerf-is-working-on-a-plan-to-unleash-ai-agents-on-the-open-internet/" target="_blank" rel="noopener">TechCrunch, Jul 15 →</a></li>
+        </ul>
+
+        <h2>Economics</h2>
+        <p><strong>Bloomberg lays out how the current AI capex cycle could turn into a fiscal crisis.</strong> The core mechanic: AI infrastructure spend is increasingly funded through debt and off-balance-sheet vehicles rather than cash, so a demand shortfall wouldn't just dent earnings — it could cascade through credit markets the way the value swap between Apple and Nvidia earlier this month already hinted at. The useful frame here is distinguishing a slowdown in AI revenue growth (bad but survivable) from a leverage unwind (the actual tail risk). <a href="https://www.bloomberg.com/news/newsletters/2026-07-19/how-ai-could-create-a-fiscal-crisis" target="_blank" rel="noopener">Bloomberg, Jul 19 →</a></p>
+
+        <blockquote>WebFetch on most of these outlets returned 403s from this environment's network policy, so this cut leans on cross-checked search summaries rather than full original-text reads — flagging that limitation here rather than presenting it as more thoroughly sourced than it is.</blockquote>
+      `
+    },
+    {
       slug: 'ai-tech-roundup-jul-2026',
       tag: 'Reading list',
       date: '2026-07-20',
