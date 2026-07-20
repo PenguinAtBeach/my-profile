@@ -9,6 +9,37 @@
 (function (root) {
   var POSTS = [
     {
+      slug: 'ai-tech-roundup-jul-20-2026',
+      tag: 'Reading list',
+      date: '2026-07-20',
+      read: '5 min read',
+      title: 'Kimi K3 rattles chip stocks, Gemini 3.5 Pro slips again',
+      excerpt: "Six stories from the last few days: a 2.8T-parameter open model that knocked semiconductors into a bear market, Google's flagship model missing a second deadline, OpenAI's AI red-teams itself, and Unitree heads for a Shanghai IPO.",
+      body: `
+        <p>A follow-up to my last sweep, a few days on — the news cycle didn't slow down. This one is shorter and more concentrated: one open-weight model release from China moved global chip valuations, Google's flagship LLM missed a deadline for the second time, and two AI labs published very different takes on how to make models safer. Grouped by topic, sourced across multiple outlets per story.</p>
+
+        <h2>LLMs</h2>
+        <ul>
+          <li><strong>Moonshot AI's Kimi K3 takes the #1 spot on Arena.ai's Frontend Code Arena</strong>, surpassing Claude Fable 5 — a 17-place jump from its predecessor, Kimi K2.6. It's a 2.8-trillion-parameter mixture-of-experts model (the largest openly downloadable model to date) with a 1M-token context, and Moonshot — backed by Alibaba — is releasing the full weights for free on July 27. The real story isn't the benchmark, it's the pricing: a model this close to the frontier, downloadable and self-hostable, directly undercuts the case for paying frontier-lab API rates. <a href="https://techstartups.com/2026/07/16/moonshot-ai-launches-kimi-k3-claims-1-spot-on-code-arena-beating-claude-fable-5/" target="_blank" rel="noopener">Tech Startups, Jul 16 →</a> · <a href="https://www.axios.com/2026/07/17/china-ai-kimi-k3-open-source-anthropic-opus" target="_blank" rel="noopener">Axios, Jul 17 →</a></li>
+          <li><strong>Google's Gemini 3.5 Pro slips again</strong>, months past the June 2026 launch it was promised at May's I/O. The stated reason is coding performance — internal benchmarks came up short even after a retrain on more code-heavy data — and the market reaction was immediate: Alphabet shares fell about 4.4%, erasing roughly $200B in market value in a single day. Coming right as Kimi K3 and GPT-5.6 both shipped, it reads as Google losing the release-cadence race, not just a single slipped date. <a href="https://www.cnbc.com/2026/07/16/alphabet-stock-gemini-3-5-pro-ai.html" target="_blank" rel="noopener">CNBC, Jul 16 →</a> · <a href="https://www.fool.com/investing/2026/07/19/alphabets-gemini-35-pro-is-late-and-the-stock-is-s/" target="_blank" rel="noopener">The Motley Fool, Jul 19 →</a></li>
+        </ul>
+
+        <h2>Infrastructure</h2>
+        <p><strong>Kimi K3's release pushed the Philadelphia Semiconductor Index into a technical bear market</strong> — down more than 20% from its June peak, its worst week in over 15 months, with Nvidia, AMD, and Broadcom all sliding. The logic traders are pricing in: if a Chinese open-weight model can get this close to the frontier this cheaply, it undercuts the assumption that catching up requires ever-larger GPU spend — the same valuation case that's been propping up the whole AI-infrastructure trade. It's the DeepSeek moment again, with a bigger model and a more mature market to shake. <a href="https://startupfortune.com/a-chinese-ai-model-just-pushed-chip-stocks-into-a-bear-market/" target="_blank" rel="noopener">Startup Fortune, Jul 18 →</a> · <a href="https://english.news.cn/20260718/3a7128e8ba5e4146b87ec169223cb3b4/c.html" target="_blank" rel="noopener">Xinhua, Jul 18 →</a></p>
+
+        <h2>Safety &amp; research</h2>
+        <ul>
+          <li><strong>OpenAI details GPT-Red, an in-house automated red-teaming model</strong> trained via self-play — an attacker model rewarded for eliciting failures like prompt injection, pitted against defender models trained to resist them. It reportedly beat human red-teamers 84% to 13% on prompt-injection discovery, and adversarially training GPT-5.6 against it cut prompt-injection failures roughly sixfold versus the model from four months earlier, without raising refusal rates on legitimate tasks. The notable design choice is closing the loop — using a model to generate the training signal that hardens the next model, rather than relying solely on human red-teams. <a href="https://openai.com/index/unlocking-self-improvement-gpt-red/" target="_blank" rel="noopener">OpenAI, Jul 15 →</a> · <a href="https://www.marktechpost.com/2026/07/16/openai-details-gpt-red-an-internal-automated-red-teaming-model-that-beat-human-red-teamers-84-to-13-on-prompt-injection/" target="_blank" rel="noopener">MarkTechPost, Jul 16 →</a></li>
+          <li><strong>Google DeepMind and Isomorphic Labs formalize a joint "bioresilience" effort</strong>, aimed both at preventing AI models from being misused to design biological threats and at giving governments and biosecurity researchers the same tools to build countermeasures faster. It builds on AlphaFold and Isomorphic's drug-design engine, and names over 15 partners already in place, including Lawrence Livermore National Laboratory, the UK AI Security Institute, and CEPI — dual-use risk and defensive tooling treated as one program rather than a policy statement bolted onto a product announcement. <a href="https://deepmind.google/blog/our-approach-to-bioresilience/" target="_blank" rel="noopener">Google DeepMind, Jul 16 →</a> · <a href="https://www.axios.com/2026/07/16/google-deepmind-biosecurity-safety" target="_blank" rel="noopener">Axios, Jul 16 →</a></li>
+        </ul>
+
+        <h2>Robotics</h2>
+        <p><strong>Unitree clears its final regulatory hurdle for a Shanghai STAR Market IPO</strong>, aiming to raise roughly $619M (4.2B yuan) at an implied valuation near 42B yuan. What stands out against the usual humanoid-robotics hype: Unitree is already profitable, reporting about $250M in FY2025 revenue and $41M in net profit, and the approval took just 73 days from filing — the fastest under the STAR Market's pre-review mechanism. A debut is expected as early as late July, which would make it the first humanoid-robot IPO on a mainland Chinese exchange. <a href="https://www.caixinglobal.com/2026-07-03/unitree-robotics-wins-approval-for-618-million-star-market-ipo-102460136.html" target="_blank" rel="noopener">Caixin Global, Jul 3 →</a> · <a href="https://www.scmp.com/tech/tech-trends/article/3359290/unitree-ipo-test-valuations-venture-capital-floods-china-robotics" target="_blank" rel="noopener">South China Morning Post →</a></p>
+
+        <blockquote>Same caveat as last time: cross-checked across multiple outlets per story rather than taken from a single source, but this is public reporting, not primary research — read the linked pieces before repeating the numbers.</blockquote>
+      `
+    },
+    {
       slug: 'ai-tech-roundup-jul-2026',
       tag: 'Reading list',
       date: '2026-07-20',
