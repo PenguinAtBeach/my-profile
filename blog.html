@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Writing — Tran Tuan Phuong</title>
+<meta name="description" content="Writing by Tran Tuan Phuong — notes on engineering decisions, patterns, and lessons from shipping real software." />
+<meta name="author" content="Tran Tuan Phuong" />
+<meta name="theme-color" content="#f6f4ee" id="themeColor" />
+<meta property="og:title" content="Writing — Tran Tuan Phuong" />
+<meta property="og:description" content="Notes on engineering decisions, patterns, and lessons from shipping real software." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Tran Tuan Phuong" />
+<meta name="twitter:card" content="summary" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='8' fill='%2316324f'/%3E%3Ctext x='17' y='24' font-family='Georgia,serif' font-size='20' fill='%23ffffff' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#f6f4ee; --paper-2:#efece3; --ink:#1c1a17; --ink-soft:#4a453d;
+    --line:#d9d4c7; --accent:#9a3b1b; --accent-2:#16324f; --card:#fffdf8;
+    --shadow:0 1px 2px rgba(28,26,23,.06), 0 12px 30px -18px rgba(28,26,23,.35);
+    --maxw:1080px;
+  }
+  html[data-theme="dark"]{
+    --paper:#14120f; --paper-2:#1c1915; --ink:#efe9dd; --ink-soft:#b0a794;
+    --line:#332e26; --accent:#e0794f; --accent-2:#9cc0e6; --card:#1a1712;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 14px 34px -18px rgba(0,0,0,.7);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Inter",system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .4s ease,color .4s ease}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-family:"Newsreader",Georgia,serif;font-weight:500;letter-spacing:-.01em;line-height:1.1;margin:0}
+  ::selection{background:var(--accent);color:#fff}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .narrow{max-width:760px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+  .skip{position:absolute;left:12px;top:-60px;z-index:200;background:var(--accent);color:#fff;padding:10px 16px;border-radius:0 0 10px 10px;font-size:14px;font-weight:600;transition:top .2s ease}
+  .skip:focus{top:0}
+
+  /* nav */
+  header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb, var(--paper) 88%, transparent);backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid transparent;transition:border-color .3s ease}
+  header.nav.scrolled{border-bottom-color:var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:66px;gap:16px}
+  .mark{display:flex;align-items:center;gap:11px;font-weight:600}
+  .monogram{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:var(--accent-2);color:#fff;font-family:"Newsreader",serif;font-size:17px}
+  html[data-theme="dark"] .monogram{color:#14120f}
+  .mark small{font-size:12px;color:var(--ink-soft);font-weight:500;letter-spacing:.02em}
+  nav.links{display:flex;align-items:center;gap:26px}
+  nav.links a.navlink{font-size:14.5px;color:var(--ink-soft);font-weight:500;position:relative}
+  nav.links a.navlink::after{content:"";position:absolute;left:0;bottom:-5px;height:1.5px;width:0;background:var(--accent);transition:width .25s ease}
+  nav.links a.navlink:hover,nav.links a.navlink:focus-visible{color:var(--ink)}
+  nav.links a.navlink:hover::after,nav.links a.navlink:focus-visible::after{width:100%}
+  nav.links a.navlink.here{color:var(--ink)}
+  nav.links a.navlink.here::after{width:100%}
+  .icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);display:grid;place-items:center;cursor:pointer;transition:all .2s ease;font-size:16px}
+  .icon-btn:hover{color:var(--ink);border-color:var(--ink-soft)}
+  @media(max-width:640px){nav.links a.navlink{display:none}}
+
+  /* page header */
+  .page-head{padding:70px 0 46px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--accent)}
+  .page-head h1{font-size:clamp(34px,6vw,58px);letter-spacing:-.02em;margin:0}
+  .page-head p{color:var(--ink-soft);max-width:600px;margin:18px 0 0;font-size:18px}
+  .backlink{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--ink-soft);margin-bottom:22px}
+  .backlink:hover{color:var(--accent);gap:11px;transition:gap .2s ease}
+
+  /* post list */
+  .list{padding:56px 0 80px}
+  .posts{display:grid;gap:18px}
+  @media(min-width:820px){.posts{grid-template-columns:1fr 1fr}}
+  .post{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px 28px;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .3s ease,border-color .3s ease}
+  .post:hover,.post:focus-visible{transform:translateY(-4px);border-color:var(--ink-soft)}
+  .pmeta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--ink-soft);letter-spacing:.03em}
+  .ptag{color:var(--accent);text-transform:uppercase;letter-spacing:.1em}
+  .pmeta .sep{opacity:.5}
+  .post h2{font-size:24px;margin:14px 0 0;line-height:1.15}
+  .post .exc{color:var(--ink-soft);font-size:15.5px;margin:12px 0 0}
+  .post .more{margin-top:18px;font-weight:600;font-size:14px;color:var(--accent);display:inline-flex;align-items:center;gap:7px}
+  .post:hover .more{gap:11px}
+
+  /* single article */
+  .article-wrap{padding:48px 0 80px}
+  .article-head .pmeta{margin-bottom:14px}
+  .article-head h1{font-size:clamp(30px,5vw,46px);letter-spacing:-.01em;line-height:1.08}
+  .article{margin-top:30px}
+  .article p{color:var(--ink-soft);font-size:18px;margin:0 0 20px}
+  .article h2{font-size:26px;margin:38px 0 14px}
+  .article ul{color:var(--ink-soft);font-size:18px;margin:0 0 20px;padding-left:22px}
+  .article li{margin:0 0 8px}
+  .article a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+  .article code{font-family:"JetBrains Mono",monospace;font-size:15px;background:var(--paper-2);border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+  .article blockquote{margin:8px 0 22px;padding:6px 0 6px 22px;border-left:3px solid var(--accent);color:var(--ink);font-family:"Newsreader",serif;font-style:italic;font-size:21px}
+  .article strong{color:var(--ink)}
+
+  /* prev/next */
+  .postnav{display:grid;gap:14px;margin-top:52px;padding-top:34px;border-top:1px solid var(--line)}
+  @media(min-width:640px){.postnav{grid-template-columns:1fr 1fr}}
+  .postnav a{border:1px solid var(--line);border-radius:14px;padding:18px 20px;background:var(--card);transition:border-color .2s ease}
+  .postnav a:hover{border-color:var(--ink-soft)}
+  .postnav .dir{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+  .postnav .t{font-family:"Newsreader",serif;font-size:18px;color:var(--ink)}
+  .postnav a.next{text-align:right}
+
+  .notfound{padding:80px 0;text-align:center;color:var(--ink-soft)}
+
+  footer{padding:44px 0;text-align:center;color:var(--ink-soft);font-size:13.5px;border-top:1px solid var(--line)}
+  footer .mono{font-family:"JetBrains Mono",monospace}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#top">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="mark" href="./index.html">
+      <span class="monogram">P</span>
+      <span>Tran Tuan Phuong<br><small>Senior Full-Stack Engineer</small></span>
+    </a>
+    <nav class="links">
+      <a class="navlink" href="./index.html#work">Work</a>
+      <a class="navlink" href="./index.html#casestudy">Case study</a>
+      <a class="navlink here" href="./blog.html">Writing</a>
+      <a class="navlink" href="./index.html#contact">Contact</a>
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle dark mode" aria-pressed="false">◐</button>
+    </nav>
+  </div>
+</header>
+
+<main id="top"></main>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Tran Tuan Phuong · Senior Full-Stack Engineer · Ho Chi Minh City</p>
+    <p>Hand-coded. © <span id="yr"></span></p>
+  </div>
+</footer>
+
+<script src="./assets/posts.js"></script>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // theme (shared with index.html via localStorage 'theme')
+  const root = document.documentElement, tt = document.getElementById('themeToggle');
+  const themeColorMeta = document.getElementById('themeColor');
+  function syncTheme(){
+    const dark = root.getAttribute('data-theme')==='dark';
+    tt.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    tt.textContent = dark ? '☀' : '◐';
+    tt.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+    if(themeColorMeta) themeColorMeta.setAttribute('content', dark ? '#14120f' : '#f6f4ee');
+  }
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme){ root.setAttribute('data-theme', savedTheme); }
+  else if(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches){ root.setAttribute('data-theme','dark'); }
+  syncTheme();
+  tt.addEventListener('click', ()=>{
+    const next = root.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next); localStorage.setItem('theme', next); syncTheme();
+  });
+
+  // nav shadow
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 12);
+  onScroll(); addEventListener('scroll', onScroll, {passive:true});
+
+  // small HTML escape for values placed into markup
+  const esc = (s)=>String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const posts = window.POSTS || [];
+  const fmt = window.formatPostDate || (x=>x);
+  const main = document.getElementById('top');
+
+  function metaRow(p){
+    return '<div class="pmeta"><span class="ptag">'+esc(p.tag)+'</span><span class="sep">·</span><span>'+esc(fmt(p.date))+'</span><span class="sep">·</span><span>'+esc(p.read)+'</span></div>';
+  }
+
+  function renderList(){
+    document.title = 'Writing — Tran Tuan Phuong';
+    let cards = '';
+    posts.forEach(p=>{
+      cards +=
+        '<a class="post reveal" href="./blog.html?post='+encodeURIComponent(p.slug)+'">'+
+          metaRow(p)+
+          '<h2>'+esc(p.title)+'</h2>'+
+          '<p class="exc">'+esc(p.excerpt)+'</p>'+
+          '<span class="more">Read post →</span>'+
+        '</a>';
+    });
+    main.innerHTML =
+      '<section class="page-head"><div class="wrap">'+
+        '<a class="backlink" href="./index.html">← Back to home</a>'+
+        '<div class="eyebrow">Writing</div>'+
+        '<h1>Notes from the workbench.</h1>'+
+        '<p>Occasional posts on things I find interesting — engineering decisions, patterns I keep reaching for, and lessons from shipping real software.</p>'+
+      '</div></section>'+
+      '<section class="list"><div class="wrap"><div class="posts">'+cards+'</div></div></section>';
+    revealAll();
+  }
+
+  function renderPost(post){
+    const idx = posts.indexOf(post);
+    const prev = posts[idx-1];   // newer
+    const next = posts[idx+1];   // older
+    document.title = post.title + ' — Tran Tuan Phuong';
+    const md = document.querySelector('meta[name="description"]');
+    if(md) md.setAttribute('content', post.excerpt);
+
+    let nav = '';
+    if(prev || next){
+      nav += '<div class="postnav">';
+      nav += prev
+        ? '<a class="prev" href="./blog.html?post='+encodeURIComponent(prev.slug)+'"><div class="dir">← Newer</div><div class="t">'+esc(prev.title)+'</div></a>'
+        : '<span></span>';
+      nav += next
+        ? '<a class="next" href="./blog.html?post='+encodeURIComponent(next.slug)+'"><div class="dir">Older →</div><div class="t">'+esc(next.title)+'</div></a>'
+        : '<span></span>';
+      nav += '</div>';
+    }
+
+    main.innerHTML =
+      '<article class="article-wrap"><div class="wrap narrow">'+
+        '<a class="backlink" href="./blog.html">← All posts</a>'+
+        '<header class="article-head reveal">'+metaRow(post)+'<h1>'+esc(post.title)+'</h1></header>'+
+        '<div class="article reveal">'+post.body+'</div>'+
+        nav+
+      '</div></article>';
+    revealAll();
+    window.scrollTo(0,0);
+  }
+
+  function renderNotFound(){
+    document.title = 'Not found — Writing';
+    main.innerHTML =
+      '<div class="wrap narrow notfound">'+
+        '<div class="eyebrow" style="justify-content:center">Writing</div>'+
+        '<h1 style="font-size:34px">That post doesn\'t exist.</h1>'+
+        '<p style="margin-top:14px"><a class="backlink" href="./blog.html">← Back to all posts</a></p>'+
+      '</div>';
+  }
+
+  function revealAll(){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.1, rootMargin:'0px 0px -30px 0px'});
+    document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.transitionDelay=(Math.min(i,6)*55)+'ms'; io.observe(el); });
+  }
+
+  function route(){
+    const slug = new URLSearchParams(location.search).get('post');
+    if(!slug){ renderList(); return; }
+    const post = posts.find(p=>p.slug===slug);
+    post ? renderPost(post) : renderNotFound();
+  }
+  addEventListener('popstate', route);
+  route();
+</script>
+</body>
+</html>
